@@ -10,4 +10,17 @@ lazy_static! {
 pub struct SubscriberRepository;
 
 impl SubscriberRepository {
+      pub fn add(product_type: &str, subscriber: Subscriber) -> Subscriber {
+            if SUBSCRIBERS.get(product_type).is_none() {
+                SUBSCRIBERS.insert(String::from(product_type), DashMap::new());
+            }
+
+            SUBSCRIBERS
+                .get(product_type)
+                .unwrap()
+                .insert(subscriber.url.clone(), subscriber.clone());
+
+            return subscriber;
+        }
+
     }
