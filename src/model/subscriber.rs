@@ -1,5 +1,4 @@
 use rocket::serde::{Deserialize, Serialize};
-use rocket::log;
 use rocket::serde::json::to_string;
 use rocket::tokio;
 use bambangshop::REQWEST_CLIENT;
@@ -17,13 +16,13 @@ impl Subscriber {
     pub async fn update(&self, payload: Notification) {
         REQWEST_CLIENT
             .post(&self.url)
-            .header("Content-Type", "JSON")
+            .header("Content-Type", "application/json")
             .body(to_string(&payload).unwrap())
             .send()
             .await
             .ok();
 
-        log::warn!(
+        println!(
             "Sent {} notification of: [{}] {} to: {}",
             payload.status,
             payload.product_type,
