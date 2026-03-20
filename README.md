@@ -117,4 +117,40 @@ Kesimpulannya, dalam konteks ini, DashMap lebih tepat digunakan dibanding hanya 
 
 #### Reflection Publisher-2
 
+1.Dalam konsep dasar MVC, Model memang mencakup penyimpanan data dan business logic. Namun, dalam praktik pengembangan modern, tanggung jawab tersebut sering dipisahkan menjadi Service dan Repository untuk mengikuti prinsip desain seperti Single Responsibility Principle (SRP).
+
+-Repository bertanggung jawab khusus untuk akses dan manipulasi data (CRUD). -Service bertanggung jawab untuk business logic dan alur proses aplikasi. -Model hanya merepresentasikan struktur data.
+
+Pemisahan ini membuat:
+
+-Kode lebih modular dan mudah dipahami -Lebih mudah untuk diuji (unit testing) -Lebih fleksibel untuk perubahan di masa depan
+
+Tanpa pemisahan ini, Model akan menjadi terlalu kompleks dan sulit untuk dipelihara.
+
+2.Jika hanya menggunakan Model tanpa memisahkan Service dan Repository, maka setiap Model akan menangani:
+
+-Struktur data -Penyimpanan data -Business logic -Interaksi dengan Model lain
+
+Hal ini akan menyebabkan:
+
+-Tight coupling antar model (Program, Subscriber, Notification saling bergantung langsung) -Kode menjadi sulit dibaca dan dipahami -Perubahan kecil dapat berdampak besar ke banyak bagian sistem -Sulit untuk melakukan testing karena logic bercampur
+
+Sebagai contoh:
+
+-Model Program harus tahu cara menyimpan Subscriber -Model Subscriber harus tahu cara mengirim notifikasi -Model Notification harus tahu cara diproses dan dikirim
+
+Akibatnya, kompleksitas meningkat drastis dan melanggar prinsip desain seperti Separation of Concerns.
+
+3.Postman adalah tools yang sangat membantu dalam menguji API yang sedang dikembangkan.
+
+Dalam proyek ini, Postman membantu untuk:
+
+-Mengirim HTTP request seperti GET, POST, DELETE ke endpoint yang dibuat -Menguji apakah endpoint bekerja sesuai dengan yang diharapkan -Melihat response dari server secara langsung
+
+Fitur Postman yang berguna:
+
+-Collection → menyimpan kumpulan endpoint untuk testing terstruktur -Environment variables → memudahkan penggantian URL atau parameter -Body (JSON) → mempermudah pengiriman data seperti Subscriber -Response viewer → melihat hasil response dengan jelas -History → melacak request yang sudah pernah dilakukan
+
+Postman sangat membantu dalam proses debugging dan memastikan API berjalan dengan benar, serta akan sangat berguna dalam proyek kelompok maupun pengembangan aplikasi di masa depan.
+
 #### Reflection Publisher-3
