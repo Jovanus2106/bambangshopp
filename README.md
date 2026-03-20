@@ -77,6 +77,43 @@ This is the place for you to write reflections:
 ### Mandatory (Publisher) Reflections
 
 #### Reflection Publisher-1
+Reflection Publisher-1
+
+1.Dalam teori Observer Pattern, Subscriber biasanya didefinisikan sebagai interface (atau trait di Rust) agar Publisher tidak bergantung pada implementasi konkret, sesuai dengan prinsip Dependency Inversion.
+
+Namun, dalam kasus BambangShop ini, penggunaan trait tidak terlalu diperlukan karena:
+
+-Subscriber hanya memiliki satu bentuk implementasi, yaitu sebagai representasi endpoint (URL) untuk menerima notifikasi.
+
+-Tidak ada variasi perilaku Subscriber yang berbeda-beda.
+
+Sehingga, penggunaan satu struct Subscriber saja sudah cukup untuk memenuhi kebutuhan sistem saat ini. Meskipun demikian, jika di masa depan terdapat berbagai jenis subscriber dengan perilaku berbeda, maka penggunaan trait akan menjadi lebih relevan untuk menjaga fleksibilitas dan extensibility.
+
+2.Karena id pada Program dan url pada Subscriber bersifat unik, maka penggunaan struktur data sangat penting.
+
+Jika menggunakan Vec:
+
+-Pencarian dan penghapusan membutuhkan iterasi (O(n)) -Tidak efisien untuk skala besar
+
+Sedangkan dengan DashMap:
+
+-Mendukung akses berbasis key (O(1)) -Memastikan keunikan data secara langsung -Lebih efisien untuk operasi CRUD
+
+Oleh karena itu, penggunaan DashMap lebih tepat dibandingkan Vec, karena: Lebih efisien , lebih sesuai dengan kebutuhan data yang memiliki key unik, mendukung performa yang lebih baik
+
+3.Dalam kasus ini, DashMap digunakan untuk memastikan thread safety karena aplikasi dapat berjalan secara concurrent (misalnya saat mengirim notifikasi ke banyak subscriber).
+
+Singleton Pattern memang dapat digunakan untuk memastikan hanya ada satu instance dari data (SUBSCRIBERS). Namun:
+
+-Singleton tidak menjamin thread safety -singleton hanya mengatur jumlah instance, bukan mekanisme akses concurrent
+
+Sebaliknya, DashMap:
+
+-Secara bawaan sudah thread-safe -Mendukung concurrent read/write tanpa race condition
+
+Sehingga: -DashMap tetap diperlukan untuk menjamin keamanan akses data -Singleton saja tidak cukup tanpa mekanisme tambahan seperti Mutex atau RwLock
+
+Kesimpulannya, dalam konteks ini, DashMap lebih tepat digunakan dibanding hanya mengandalkan Singleton Pattern, karena mampu memenuhi kebutuhan thread safety sekaligus efisiensi akses data.
 
 #### Reflection Publisher-2
 
