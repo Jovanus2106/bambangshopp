@@ -155,7 +155,7 @@ Postman sangat membantu dalam proses debugging dan memastikan API berjalan denga
 
 #### Reflection Publisher-3
 
-Dalam tutorial BambangShop ini, kita menggunakan Push Model dari Observer Pattern.
+1. Dalam tutorial BambangShop ini, kita menggunakan Push Model dari Observer Pattern.
 
 Hal ini terlihat dari cara kerja sistem:
 
@@ -171,9 +171,7 @@ Artinya, semua informasi seperti:
 
 jadi sudah “di-push” langsung ke subscriber melalui HTTP POST.
 
-2.
-
-Jika menggunakan Pull Model, maka alurnya akan berbeda:
+2.Jika menggunakan Pull Model, maka alurnya akan berbeda:
 
 Publisher hanya mengirim notifikasi sederhana (misalnya ID produk atau sinyal perubahan)
 Subscriber harus melakukan request ulang ke server untuk mengambil data lengkap
@@ -197,9 +195,7 @@ Untuk kasus BambangShop, Push Model lebih cocok karena:
 -Data tidak terlalu besar
 -Tidak butuh real-time update ulang dari subscriber
 
-3.
-
-Jika kita tidak menggunakan multi-threading dalam proses notifikasi:
+3.Jika kita tidak menggunakan multi-threading dalam proses notifikasi:
 
  Yang akan terjadi:
 Notifikasi dikirim secara sequential (satu per satu)
