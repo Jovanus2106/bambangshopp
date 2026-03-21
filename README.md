@@ -154,3 +154,71 @@ Fitur Postman yang berguna:
 Postman sangat membantu dalam proses debugging dan memastikan API berjalan dengan benar, serta akan sangat berguna dalam proyek kelompok maupun pengembangan aplikasi di masa depan.
 
 #### Reflection Publisher-3
+
+Dalam tutorial BambangShop ini, kita menggunakan Push Model dari Observer Pattern.
+
+Hal ini terlihat dari cara kerja sistem:
+
+Publisher (Program / NotificationService) langsung mengirim payload lengkap (Notification) ke Subscriber
+Subscriber tidak perlu meminta data tambahan lagi
+
+Artinya, semua informasi seperti:
+
+-product_title
+-product_type
+-product_url
+-status
+
+jadi sudah “di-push” langsung ke subscriber melalui HTTP POST.
+
+2.
+
+Jika menggunakan Pull Model, maka alurnya akan berbeda:
+
+Publisher hanya mengirim notifikasi sederhana (misalnya ID produk atau sinyal perubahan)
+Subscriber harus melakukan request ulang ke server untuk mengambil data lengkap
+
+-Kelebihan Pull Model:
+Data selalu up-to-date karena diambil langsung saat dibutuhkan
+Payload dari publisher lebih kecil (lebih ringan)
+Lebih fleksibel jika data sering berubah
+
+-Kekurangan Pull Model:
+Membutuhkan request tambahan dari subscriber (lebih kompleks)
+Menambah beban server karena banyak request masuk
+Latency lebih tinggi (lebih lambat)
+Implementasi lebih ribet dibanding push
+
+Kesimpulan:
+
+Untuk kasus BambangShop, Push Model lebih cocok karena:
+
+-Sistem notifikasi sederhana
+-Data tidak terlalu besar
+-Tidak butuh real-time update ulang dari subscriber
+
+3.
+
+Jika kita tidak menggunakan multi-threading dalam proses notifikasi:
+
+ Yang akan terjadi:
+Notifikasi dikirim secara sequential (satu per satu)
+Jika satu subscriber lambat / down → seluruh proses ikut terhambat
+Waktu respon API menjadi lebih lama
+
+Contoh:
+
+Misalnya ada 100 subscriber:
+
+-Tanpa thread → kirim 1 per 1 → lama banget
+-Dengan thread → kirim paralel → jauh lebih cepat
+
+-Dampak negatif tanpa multi-threading:
+Performa menurun drastis
+Scalability buruk
+User experience jelek (delay tinggi)
+
+Keuntungan multi-threading:
+-Pengiriman notifikasi berjalan paralel
+-Tidak saling blocking
+-Lebih cepat dan efisien
